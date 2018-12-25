@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.1/jquery.rateyo.min.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="  https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  <title>jQuery formBuilder/formRender Demo</title>
+</head>
+
+<body>
+  <label for="toggleBootstrap">Toggle Bootstrap <input type="checkbox" id="toggleBootstrap" /></label> |
+  dataType: <label>XML <input type="radio" name="demo-dataType" value="xml" class="demo-dataType" /></label><label>JSON
+    <input type="radio" name="demo-dataType" value="json" class="demo-dataType" /></label>
+  <div class="content">
+    <h1 class="formbuilder-title">jQuery formBuilder -
+      <button class="editForm">Render</button>
+    </h1>
+    <h1 class="formrender-title">jQuery formRender -
+      <button class="editForm">Edit</button>
+    </h1>
+    <div id="stage1" class="build-wrap"></div>
+    <form class="render-wrap"></form>
+    <div class="action-buttons formbuilder-actions">
+      <h2>Actions</h2>
+      <button id="getFieldTypes" type="button">Get Field Types</button>
+      <button id="showData" type="button">Show Data</button>
+      <button id="clearFields" type="button">Clear All Fields</button>
+      <button id="getData" type="button">Get Data</button>
+      <button id="getXML" type="button">Get XML Data</button>
+      <button id="getJSON" type="button">Get JSON Data</button>
+      <button id="getJS" type="button">Get JS Data</button>
+      <button id="setData" type="button">Set Data</button>
+      <button id="toggleAllEdit" type="button">Toggle All Field Edit</button>
+      <button id="toggleEdit" type="button">Toggle Field Edit</button>
+      <input type="text" placeholder="current field id" id="currentFieldId" />
+      <button id="addField" type="button">Add Field</button>
+      <button id="removeField" type="button">Remove Field</button>
+      <button id="resetDemo" type="button">Reset Demo</button>
+      <h2>i18n</h2>
+      <select id="setLanguage">
+        
+        <option value="ar-SA">
+          سعودي
+        </option>
+        
+        <option value="ar-TN">
+          تونسي
+        </option>
+        
+        <option value="cs-CZ">
+          čeština
+        </option>
+        
+        <option value="de-DE">
+          Deutsch
+        </option>
+        
+        <option value="en-US">
+          English (US)
+        </option>
+        
+        <option value="es-ES">
+          español
+        </option>
+        
+        <option value="fa-IR">
+          فارسى
+        </option>
+        
+        <option value="fi-FI">
+          suomen
+        </option>
+        
+        <option value="fr-FR">
+          français
+        </option>
+        
+        <option value="he-IL">
+          עברית‬
+        </option>
+        
+        <option value="hu-HU">
+          magyar
+        </option>
+        
+        <option value="it-IT">
+          italiano
+        </option>
+        
+        <option value="ja-JP">
+          日本語
+        </option>
+        
+        <option value="my-MM">
+          ဗမာစကာ
+        </option>
+        
+        <option value="nb-NO">
+          norsk
+        </option>
+        
+        <option value="nl-NL">
+          Nederlands
+        </option>
+        
+        <option value="pl-PL">
+          Polska
+        </option>
+        
+        <option value="pt-BR">
+          português
+        </option>
+        
+        <option value="qz-MM">
+          ဗမာစကာ
+        </option>
+        
+        <option value="ro-RO">
+          român
+        </option>
+        
+        <option value="ru-RU">
+          русский язык
+        </option>
+        
+        <option value="sl-SI">
+          Slovenščina (SI)
+        </option>
+        
+        <option value="tr-TR">
+          Türkçe
+        </option>
+        
+        <option value="uk-UA">
+          українська мова
+        </option>
+        
+        <option value="vi-VN">
+          tiếng Việt
+        </option>
+        
+        <option value="zh-CN">
+          简化字
+        </option>
+        
+        <option value="zh-TW">
+          台語
+        </option>
+        
+      </select>
+    </div>
+    <div class="action-buttons formrender-actions">
+      <h2>Actions</h2>
+      <button id="loadUserForm" type="button">Load User Form</button>
+      <button id="showUserData" type="button">Show User Data</button>
+      <button id="renderUserForm" type="button">Render User Form</button>
+      <button id="getHTML" type="button">Get HTML</button>
+      <button id="clearUserForm" type="button">Clear Form</button>
+      <button id="testSubmit" type="submit">Test Submit</button>
+    </div>
+  </div>
+  <div id="formbuilder-options"></div>
+  <script src="assets/js/vendor.js"></script>
+
+  <script src="dist/form-builder.min.js"></script>
+  <script src="dist/form-render.min.js"></script>
+  <script src="demo/assets/js/demo.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.1/jquery.rateyo.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" type="text/css"/>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css" type="text/css"/>
+
+  <style>
+    .form-wrap.form-builder .frmb .sortable-options>li {
+  display: flex;
+ 
+}
+/* option:empty
+{
+  display:none;
+} */
+
+.form-wrap.form-builder .frmb .sortable-options>li .remove {
+  position: static;
+  margin-top:8px !important
+}
+.showhideCheck{
+  margin-top: 12px !important;
+  margin-left:10px;
+}
+    .asdf-wrap .ui-tabs {
+      background: #fff;
+      overflow: hidden;
+      border: 1px solid #c5c5c5;
+      border-radius: 3px;
+    }
+
+    .asdf-wrap .ui-tabs li {
+      list-style: none;
+      border-bottom: 1px solid #ccc;
+      padding: 0px 8px;
+      height: 32px;
+      position: relative;
+    }
+
+    div.asdf-wrap .ui-tabs li:last-child {
+      border-bottom-right-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
+    }
+
+    .asdf-wrap .ui-tabs li.ui-tabs-active:after {
+      content: '';
+      position: absolute;
+      top: -3px;
+      right: -2px;
+      display: block;
+      height: 34px;
+      width: 4px;
+      background: #fff;
+
+    }
+
+    .asdf-wrap .ui-tabs-nav {
+      margin: 0;
+      padding: 0;
+      width: 50%;
+      float: left;
+      border-right: 1px solid #ccc;
+    }
+
+    .asdf-wrap .ui-tabs-panel {
+      padding: 11px;
+      width: 50%;
+      float: left;
+    }
+
+    input.tab_input {
+      padding: 0px 12px !important;
+      border: none !important;
+      background-color: transparent !important;
+      font-size: 14px !important;
+      /* line-height: 15px; */
+      height: 24px !important;
+    }
+  </style>
+  <script>
+    $(document).on('click', '#addParTab', function (e) {
+      e.preventDefault()
+      let currTabId=$(this).prev('div').attr('id')
+      let targetUl=$('#'+currTabId).find('ul')
+      console.log(currTabId)
+      //let newtabName = $(this).prev('input').val()
+      const tabRand = Math.random().toString(36).substring(2, 15)
+      targetUl.append("<li><a href='#tab" + tabRand + "'>" + '<input type="text" class="tab_input" placeholder="tabname"/>' + "</a><i class='tabClose fa fa-times' aria-hidden='true' data-tabid='1'></i></li>")//tabname
+      $("#"+currTabId).append("<div id='tab" + tabRand + "'><li><input type='text' class='sub_tab_input' placeholder='tabname' /><i class='subliRev fa fa-times' aria-hidden='true' data-tabid='1'></i></li></div>")//tabcontent
+      delete ($.ui.tabs.prototype._tabKeydown)
+      $("#"+currTabId).tabs("refresh");
+      const tabCount = $('#subTabs ul').children().length - 1
+      console.log(tabCount)
+      $('#'+currTabId).tabs('option', 'active', tabCount)
+    })
+ 
+    $(document).on('click', '#addList', function (e) {
+      e.preventDefault()
+      let currTabId=$(this).prev().prev().attr('id')
+      let targetUl=$('#'+currTabId).find('ul')
+      $(this).dblclick(function (e) {//disable close edit form on double click on this button
+        e.stopPropagation()
+        return
+      })
+      // const tabs = $('#'+currTabId).tabs('option','active')//get active tab no
+      let targetTabId = $("#"+currTabId+" .ui-tabs-panel:visible").attr("id")//get active visible tab id
+      $('#' + targetTabId).append("<li><input type='text'  class='sub_tab_input' placeholder='tabname'/> <i class='subliRev fa fa-times' aria-hidden='true' data-tabid='1'></i></li>")
+    })
+    $(document).on('click', '.tabClose', function () {
+      let curli = $(this).parent()
+      let tabToActive = curli.index()
+      curli.remove()
+      let selDel = $(this).parent().attr('aria-controls')
+      $('#subTabs').find('#' + selDel).remove()
+      $('#subTabs').tabs('option', 'active', tabToActive - 1)
+
+    });
+    $(document).on('click', '.subliRev', function () {
+      $(this).parent('li').remove()
+
+    });
+  </script>
+   
+    </body>
+
+</html>
