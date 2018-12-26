@@ -9,6 +9,7 @@ export const defaultOptions = {
   append: false, // append non-editable content to the form.
   controlOrder: [
     'autocomplete',
+    'testControl',
     'button',
     'checkbox-group',
     'checkbox',
@@ -21,7 +22,8 @@ export const defaultOptions = {
     'radio-group',
     'select',
     'text',
-    'textarea'
+    'textarea',
+    'targetForm'
   ],
   controlPosition: 'right',
   dataType: 'json',

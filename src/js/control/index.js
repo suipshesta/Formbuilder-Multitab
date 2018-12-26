@@ -10,9 +10,11 @@ import controlTextarea from './textarea';
 import controlTinymce from './textarea.tinymce';
 import controlQuill from './textarea.quill';
 import targetForm from './targetform';
+import controlTestControl from './testControl';
 
 export default {
   controlAutocomplete,
+  controlTestControl,
   controlButton,
   controlCustom,
   controlHidden,
@@ -23,6 +25,6 @@ export default {
   controlTextarea,
   controlTinymce,
   controlQuill,
-  targetForm
+  targetForm,
 };
 

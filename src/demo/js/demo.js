@@ -33,6 +33,11 @@ document.getElementById('toggleBootstrap').addEventListener('click', toggleBootS
 jQuery(function ($) {
   const fields = [
     {
+      type: 'testControl',
+      label: 'Custom testcontrol',
+      required: true,
+    },
+    {
       type: 'targetForm',
       label:'Target Form',
       values: [
@@ -46,7 +51,6 @@ jQuery(function ($) {
         { label: 'Swift' },
         { label: 'Ruby' },
       ]
-      
     },
     {
       type: 'autocomplete',
