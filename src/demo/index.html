@@ -65,28 +65,32 @@
   <script src="<%= htmlWebpackPlugin.options.demo %>"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.1/jquery.rateyo.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" type="text/css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" type="text/css" />
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css" type="text/css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css"
+    type="text/css" />
 
   <style>
     .form-wrap.form-builder .frmb .sortable-options>li {
-  display: flex;
- 
-}
-/* option:empty
+      display: flex;
+
+    }
+
+    /* option:empty
 {
   display:none;
 } */
 
-.form-wrap.form-builder .frmb .sortable-options>li .remove {
-  position: static;
-  margin-top:8px !important
-}
-.showhideCheck{
-  margin-top: 12px !important;
-  margin-left:10px;
-}
+    .form-wrap.form-builder .frmb .sortable-options>li .remove {
+      position: static;
+      margin-top: 8px !important
+    }
+
+    .showhideCheck {
+      margin-top: 12px !important;
+      margin-left: 10px;
+    }
+
     .asdf-wrap .ui-tabs {
       background: #fff;
       overflow: hidden;
@@ -145,39 +149,40 @@
   <script>
     $(document).on('click', '#addParTab', function (e) {
       e.preventDefault()
-      let currTabId=$(this).prev('div').attr('id')
-      let targetUl=$('#'+currTabId).find('ul')
+      let currTabId = $(this).prev('div').attr('id')
+      let targetUl = $('#' + currTabId).find('ul')
       console.log(currTabId)
       //let newtabName = $(this).prev('input').val()
       const tabRand = Math.random().toString(36).substring(2, 15)
       targetUl.append("<li><a href='#tab" + tabRand + "'>" + '<input type="text" class="tab_input" placeholder="tabname"/>' + "</a><i class='tabClose fa fa-times' aria-hidden='true' data-tabid='1'></i></li>")//tabname
-      $("#"+currTabId).append("<div id='tab" + tabRand + "'><li><input type='text' class='sub_tab_input' placeholder='tabname' /><i class='subliRev fa fa-times' aria-hidden='true' data-tabid='1'></i></li></div>")//tabcontent
+      $("#" + currTabId).append("<div id='tab" + tabRand + "'><li><input type='text' class='sub_tab_input' placeholder='tabname' /><i class='subliRev fa fa-times' aria-hidden='true' data-tabid='1'></i></li></div>")//tabcontent
       delete ($.ui.tabs.prototype._tabKeydown)
-      $("#"+currTabId).tabs("refresh");
+      $("#" + currTabId).tabs("refresh");
       const tabCount = $('#subTabs ul').children().length - 1
-      console.log(tabCount)
-      $('#'+currTabId).tabs('option', 'active', tabCount)
+      $('#' + currTabId).tabs('option', 'active', tabCount)
     })
- 
+
     $(document).on('click', '#addList', function (e) {
       e.preventDefault()
-      let currTabId=$(this).prev().prev().attr('id')
-      let targetUl=$('#'+currTabId).find('ul')
+      let currTabId = $(this).prev().prev().attr('id')
+      let targetUl = $('#' + currTabId).find('ul')
       $(this).dblclick(function (e) {//disable close edit form on double click on this button
         e.stopPropagation()
         return
       })
       // const tabs = $('#'+currTabId).tabs('option','active')//get active tab no
-      let targetTabId = $("#"+currTabId+" .ui-tabs-panel:visible").attr("id")//get active visible tab id
+      let targetTabId = $("#" + currTabId + " .ui-tabs-panel:visible").attr("id")//get active visible tab id
       $('#' + targetTabId).append("<li><input type='text'  class='sub_tab_input' placeholder='tabname'/> <i class='subliRev fa fa-times' aria-hidden='true' data-tabid='1'></i></li>")
     })
     $(document).on('click', '.tabClose', function () {
       let curli = $(this).parent()
+      let parTab = $(this).parent().parent().parent().attr('id');
       let tabToActive = curli.index()
       curli.remove()
       let selDel = $(this).parent().attr('aria-controls')
-      $('#subTabs').find('#' + selDel).remove()
-      $('#subTabs').tabs('option', 'active', tabToActive - 1)
+      console.log(selDel)
+      $('#' + parTab).find('#' + selDel).remove();
+      $('#' + parTab).tabs('option', 'active', tabToActive - 1);
 
     });
     $(document).on('click', '.subliRev', function () {
@@ -185,7 +190,7 @@
 
     });
   </script>
-   
-    </body>
+
+</body>
 
 </html>
