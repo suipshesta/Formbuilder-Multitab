@@ -31,13 +31,7 @@ const toggleBootStrap = ({ target }) => {
 document.getElementById('toggleBootstrap').addEventListener('click', toggleBootStrap, false)
 
 jQuery(function ($) {
-  const fields = [
-    {
-      type: 'testControl',
-      label: 'Custom testcontrol',
-      required: true,
-    },
-    {
+  const fields = [ {
       type: 'targetForm',
       label:'Target Form',
       values: [

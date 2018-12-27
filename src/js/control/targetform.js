@@ -5,6 +5,7 @@ import control from '../control'
  * Output a <input type="text" ... /> form element
  */
 export default class targetForm extends control {
+ 
 
   /**
    * build a text DOM element, supporting other jquery text form-control's
