@@ -1097,7 +1097,7 @@ export default class Helpers {
    * Small wrapper for input markup
    * @param  {Object} attrs
    * @return {Object} DOM element
-   */
+   */ 
   input(attrs = {}) {
     return m('input', null, attrs)
   }

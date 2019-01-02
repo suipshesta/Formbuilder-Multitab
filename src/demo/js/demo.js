@@ -31,44 +31,44 @@ const toggleBootStrap = ({ target }) => {
 document.getElementById('toggleBootstrap').addEventListener('click', toggleBootStrap, false)
 
 jQuery(function ($) {
-  const fields = [ {
-      type: 'targetForm',
-      label:'Target Form',
-      values: [
-        { label: 'SQL',childerns:['sql1','sql 2']},
-        { label: 'C#' },
-        { label: 'JavaScript' },
-        { label: 'Java' },
-        { label: 'Python' },
-        { label: 'C++' },
-        { label: 'PHP' },
-        { label: 'Swift' },
-        { label: 'Ruby' },
-      ]
+  const fields = [{
+    type: 'targetForm',
+    label: 'Target Form',
+    values: [
+      { label: 'SQL', childerns: ['sql1', 'sql 2'] },
+      { label: 'C#' },
+      { label: 'JavaScript' },
+      { label: 'Java' },
+      { label: 'Python' },
+      { label: 'C++' },
+      { label: 'PHP' },
+      { label: 'Swift' },
+      { label: 'Ruby' },
+    ]
+  },
+  {
+    type: 'autocomplete',
+    label: 'Custom Autocomplete',
+    required: true,
+    values: [
+      { label: 'SQL' },
+      { label: 'C#' },
+      { label: 'JavaScript' },
+      { label: 'Java' },
+      { label: 'Python' },
+      { label: 'C++' },
+      { label: 'PHP' },
+      { label: 'Swift' },
+      { label: 'Ruby' },
+    ],
+  },
+  {
+    label: 'Star Rating',
+    attrs: {
+      type: 'starRating',
     },
-    {
-      type: 'autocomplete',
-      label: 'Custom Autocomplete',
-      required: true,
-      values: [
-        { label: 'SQL' },
-        { label: 'C#' },
-        { label: 'JavaScript' },
-        { label: 'Java' },
-        { label: 'Python' },
-        { label: 'C++' },
-        { label: 'PHP' },
-        { label: 'Swift' },
-        { label: 'Ruby' },
-      ],
-    },
-    {
-      label: 'Star Rating',
-      attrs: {
-        type: 'starRating',
-      },
-      icon: '🌟',
-    },
+    icon: '🌟',
+  },
   ]
 
   const replaceFields = [
@@ -152,7 +152,7 @@ jQuery(function ($) {
 
   const typeUserAttrs = {
     text: {
-      shape: {
+      asdf: {
         label: 'Class',
         multiple: true,
         options: {
@@ -167,7 +167,7 @@ jQuery(function ($) {
         value: false,
       },
     },
-    targetForm:{
+    targetForm: {
       asdf: {
         label: 'Menulist',
         multiple: true,
@@ -227,10 +227,11 @@ jQuery(function ($) {
         },
       },
     },
-    typeUserEvents:{
-      select:{
-        onadd:function(){
-          // console.log($(fld).find('.selElement'))
+    typeUserEvents: {
+      select: {
+        onadd: function (e) {
+          const yy = $(e).find('.form-elements')
+          yy.wrap('<div clsss="custom_class"></div>')
         }
       }
     }
@@ -239,7 +240,7 @@ jQuery(function ($) {
    * Toggles the edit mode for the demo
    * @return {Boolean} editMode
    */
- 
+
   const formData = window.sessionStorage.getItem('formData')
   let editing = true
 

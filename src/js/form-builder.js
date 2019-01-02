@@ -486,13 +486,12 @@ const FormBuilder = function(opts, element) {
         advFields.push(advFieldMap[attr](isDisabled))
       }
     })
-
     // Append custom attributes as defined in typeUserAttrs option
     if (opts.typeUserAttrs[type]) {
       const customAttr = processTypeUserAttrs(opts.typeUserAttrs[type], values)
       advFields.push(customAttr)
     }
-
+    
     return advFields.join('')
   }
 
@@ -518,6 +517,7 @@ const FormBuilder = function(opts, element) {
    * @return {String}              markup for custom user attributes
    */
   function processTypeUserAttrs(typeUserAttr, values) {
+    console.log(typeUserAttr)
     const advField = []
     const attrTypeMap = {
       array: selectUserAttrs,
@@ -525,8 +525,9 @@ const FormBuilder = function(opts, element) {
       number: numberAttribute,
       boolean: (attr, attrData) =>
         boolAttribute(attr, { ...attrData, [attr]: values[attr] }, { first: attrData.label }),
+        asdar:customItem,
     }
-
+    console.log(attrTypeMap)
     for (const attribute in typeUserAttr) {
       if (typeUserAttr.hasOwnProperty(attribute)) {
         const attrValType = userAttrType(attribute, typeUserAttr[attribute])
@@ -538,7 +539,7 @@ const FormBuilder = function(opts, element) {
         if (tUA.label) {
           i18n[attribute] = tUA.label
         }
-
+        console.log(attrValType)
         if (attrTypeMap[attrValType]) {
           advField.push(attrTypeMap[attrValType](attribute, tUA))
         }
@@ -547,7 +548,6 @@ const FormBuilder = function(opts, element) {
         tUA.value = origValue
       }
     }
-
     return advField.join('')
   }
 
@@ -615,7 +615,19 @@ const FormBuilder = function(opts, element) {
 
     const select = m('select', optis, selectAttrs).outerHTML
     const inputWrap = `<div class="input-wrap">${select}</div>`
-    return `<div class="form-group ${name}-wrap">${label}${inputWrap}</div>`
+    const mdom=`<div class="form-group ${name}-wrap">${label}${inputWrap}</div>`
+    return mdom
+  }
+  /**
+   * Select input for multiple choice user attributes
+   * @todo  replace with selectAttr
+   * @param  {String} name
+   * @param  {Object} fieldData
+   * @return {String}         select markup
+   */
+  function customItem(name, fieldData) {
+  console.log(name)
+  return '<h1>asdf</h1>'
   }
 
   const boolAttribute = (name, values, labels = {}) => {
@@ -1092,7 +1104,7 @@ const FormBuilder = function(opts, element) {
   })
 
   $stage.on('dblclick', 'li.form-field', e => {
-    if (['select', 'input', 'label'].includes(e.target.tagName.toLowerCase()) || e.target.contentEditable === 'true') {
+    if (['select', 'input', 'label', 'button'].includes(e.target.tagName.toLowerCase()) || e.target.contentEditable === 'true') {
       return
     }
     e.stopPropagation()

@@ -5,6 +5,18 @@ import control from '../control'
  * Output a <input type="text" ... /> form element
  */
 export default class targetForm extends control {
+    /**
+   * definition
+   * @return {Object} select control definition
+   */
+  static get definition() {
+    return {
+      inactive: ['checkbox'],
+      mi18n: {
+        minSelectionRequired: 'minSelectionRequired',
+      },
+    }
+  }
  
 
   /**
@@ -18,7 +30,6 @@ export default class targetForm extends control {
     $('#subTabs_'+tabRand)
       .tabs()
       .addClass('ui-tabs-vertical ui-helper-clearfix')
-      // console.log(this.dom)
     return this.dom
   }
  
