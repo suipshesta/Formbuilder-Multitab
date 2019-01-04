@@ -16,7 +16,7 @@ function createNewEvent(eventName) {
     event = document.createEvent('Event')
     event.initEvent(eventName, true, true)
   }
-
+ 
   return event
 }
 

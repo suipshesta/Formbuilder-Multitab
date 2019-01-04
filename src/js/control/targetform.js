@@ -42,7 +42,7 @@ export default class targetForm extends control {
       $(this.dom).val(this.config.userData[0])
     }
   }
-}
+}       
 
 // register this control for the following types & text subtypes
 control.register(['targetForm'], targetForm)

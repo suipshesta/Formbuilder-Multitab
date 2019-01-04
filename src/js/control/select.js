@@ -17,7 +17,7 @@ export default class controlSelect extends control {
       },
     }
   }
-
+ 
   /**
    * build a select DOM element, supporting other jquery text form-control's
    * @return {Object} DOM Element to be injected into the form.
