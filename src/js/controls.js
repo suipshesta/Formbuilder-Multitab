@@ -13,7 +13,7 @@ export default class Controls {
    * @param {Object} opts
    * @param {Object} d dom instance
    */
-  constructor(opts, d) {
+  constructor(opts, d) { 
     this.opts = opts
     this.dom = d.controls
     this.custom = controlCustom
