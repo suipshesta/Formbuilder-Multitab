@@ -28,7 +28,7 @@ import {
 
 const DEFAULT_TIMEOUT = 333
 
-const FormBuilder = function(opts, element) {
+const FormBuilder = function (opts, element) {
   const formBuilder = this
   const i18n = mi18n.current
   const formID = `frmb-${new Date().getTime()}`
@@ -85,7 +85,7 @@ const FormBuilder = function(opts, element) {
     revert: 150,
     beforeStop: (evt, ui) => h.beforeStop.call(h, evt, ui),
     distance: 3,
-    update: function(event, ui) {
+    update: function (event, ui) {
       if (h.doCancel) {
         return false
       }
@@ -176,7 +176,7 @@ const FormBuilder = function(opts, element) {
   }
 
   // builds the standard formbuilder datastructure for a field definition
-  const prepFieldVars = function($field, isNew = false) {
+  const prepFieldVars = function ($field, isNew = false) {
     let field = {}
     if ($field instanceof jQuery) {
       // get the default type etc & label for this field
@@ -237,7 +237,7 @@ const FormBuilder = function(opts, element) {
   }
 
   // Parse saved XML template data
-  const loadFields = function(formData) {
+  const loadFields = function (formData) {
     formData = h.getData(formData)
     if (formData && formData.length) {
       formData.forEach(fieldData => prepFieldVars(trimObj(fieldData)))
@@ -264,7 +264,7 @@ const FormBuilder = function(opts, element) {
    * @param  {Object} fieldData
    * @return {String} field options markup
    */
-  const fieldOptions = function(fieldData) {
+  const fieldOptions = function (fieldData) {
     const { type, values, name } = fieldData
     let fieldValues
     const optionActions = [m('a', mi18n.get('addOption'), { className: 'add add-opt' })]
@@ -491,7 +491,7 @@ const FormBuilder = function(opts, element) {
       const customAttr = processTypeUserAttrs(opts.typeUserAttrs[type], values)
       advFields.push(customAttr)
     }
-    
+
     return advFields.join('')
   }
 
@@ -502,6 +502,9 @@ const FormBuilder = function(opts, element) {
    * @return {String} type of user attr
    */
   function userAttrType(attr, attrData) {
+    // console.log(attrData.type)
+    if (attrData.type == 'customItem')
+      return 'customItem'
     return (
       [
         ['array', ({ options }) => !!options],
@@ -517,7 +520,6 @@ const FormBuilder = function(opts, element) {
    * @return {String}              markup for custom user attributes
    */
   function processTypeUserAttrs(typeUserAttr, values) {
-    console.log(typeUserAttr)
     const advField = []
     const attrTypeMap = {
       array: selectUserAttrs,
@@ -525,9 +527,8 @@ const FormBuilder = function(opts, element) {
       number: numberAttribute,
       boolean: (attr, attrData) =>
         boolAttribute(attr, { ...attrData, [attr]: values[attr] }, { first: attrData.label }),
-        asdar:customItem,
+      customItem: customItem,
     }
-    console.log(attrTypeMap)
     for (const attribute in typeUserAttr) {
       if (typeUserAttr.hasOwnProperty(attribute)) {
         const attrValType = userAttrType(attribute, typeUserAttr[attribute])
@@ -539,7 +540,6 @@ const FormBuilder = function(opts, element) {
         if (tUA.label) {
           i18n[attribute] = tUA.label
         }
-        console.log(attrValType)
         if (attrTypeMap[attrValType]) {
           advField.push(attrTypeMap[attrValType](attribute, tUA))
         }
@@ -587,6 +587,7 @@ const FormBuilder = function(opts, element) {
    * @return {String}         select markup
    */
   function selectUserAttrs(name, fieldData) {
+    // console.log(fieldData)
     const { multiple, options, label: labelText, value, class: classname, className, ...restData } = fieldData
     const optis = Object.keys(options).map(val => {
       const attrs = { value: val }
@@ -609,13 +610,13 @@ const FormBuilder = function(opts, element) {
 
     const label = `<label for="${selectAttrs.id}">${i18n[name]}</label>`
 
-    Object.keys(restData).forEach(function(attr) {
+    Object.keys(restData).forEach(function (attr) {
       selectAttrs[attr] = restData[attr]
     })
 
     const select = m('select', optis, selectAttrs).outerHTML
     const inputWrap = `<div class="input-wrap">${select}</div>`
-    const mdom=`<div class="form-group ${name}-wrap">${label}${inputWrap}</div>`
+    const mdom = `<div class="form-group ${name}-wrap">${label}${inputWrap}</div>`
     return mdom
   }
   /**
@@ -626,8 +627,28 @@ const FormBuilder = function(opts, element) {
    * @return {String}         select markup
    */
   function customItem(name, fieldData) {
-  console.log(name)
-  return '<h1>asdf</h1>'
+     const { items: items,label:label} = fieldData
+     const label1 = `<label>${label}</label>`
+     let inputCol = '';
+     let calDamage=0;
+     for (const property in items) {
+       if (items.hasOwnProperty(property)) {
+         inputCol += '<li class="damLi">' + m('input', null, { type: 'text', value: property,class:'damItemName' }).outerHTML + m('input', null, { type: 'number', value: items[property] ,class:'damItemCost'}).outerHTML + '<a class="itemRemove btn icon-cancel" title="Remove Element"></a></li>'
+        calDamage=calDamage+items[property]
+        }
+     }
+     const optionActions = [m('a', 'Add Item+', { className: 'add add-item' })]
+     const optionActionsWrap = m('div', optionActions, { className: 'option-actions' })
+     const optionsWrap = m('div', optionActionsWrap, { className: 'sortable-options-wrap' }).outerHTML
+     
+     const calcInput=m('input',null,{type:'number',value:calDamage}).outerHTML
+
+     const inputWrap = `<div class="input-wrap damDiv sortable-options-wrap">${inputCol}</div>`
+     const resultDamage = `<div class="input-wrap sortable-options-wrap">${calcInput}</div>`
+
+     const mdom1 = `<div class="form-group ${name}-wrap">${label1}${inputWrap}</div>${optionsWrap}`
+     const mdom2 = `<div class="form-group damageCal-wrap"><label>Total Damage</label>${resultDamage}</div>`
+     return `${mdom1}${mdom2}`
   }
 
   const boolAttribute = (name, values, labels = {}) => {
@@ -851,7 +872,7 @@ const FormBuilder = function(opts, element) {
   }
 
   // Append the new field to the editor
-  const appendNewField = function(values, isNew = true) {
+  const appendNewField = function (values, isNew = true) {
     const type = values.type || 'text'
     const label = values.label || (isNew ? i18n.get(type) || mi18n.get('label') : '')
     const disabledFieldButtons = opts.disabledFieldButtons[type] || values.disabledFieldButtons
@@ -958,7 +979,7 @@ const FormBuilder = function(opts, element) {
   }
 
   // Select field html, since there may be multiple
-  const selectFieldOptions = function(name, optionData, multipleSelect) {
+  const selectFieldOptions = function (name, optionData, multipleSelect) {
     const optionInputType = {
       selected: multipleSelect ? 'checkbox' : 'radio',
     }
@@ -985,12 +1006,12 @@ const FormBuilder = function(opts, element) {
         optionInputs.push(m('input', null, attrs))
       }
     }
-    const selAtr={
+    const selAtr = {
       className: 'selElement',
       name: 'selElement',
     }
     optionInputs.push(m('select', '', selAtr))
-    
+
     optionInputs.push('<div class="pretty p-switch p-fill"><input type="checkbox" class="showhideCheck"/><div class="state p-success"><label>Hide/Show</label></div></div>')
     const removeAttrs = {
       className: 'remove btn icon-cancel',
@@ -1089,7 +1110,7 @@ const FormBuilder = function(opts, element) {
   })
 
   // toggle fields
-  $stage.on('click touchstart', '.toggle-form, .close-field', function(e) {
+  $stage.on('click touchstart', '.toggle-form, .close-field', function (e) {
     e.stopPropagation()
     e.preventDefault()
     if (e.handled !== true) {
@@ -1114,8 +1135,8 @@ const FormBuilder = function(opts, element) {
         e.target.tagName == 'li'
           ? $(e.target).attr('id')
           : $(e.target)
-              .closest('li.form-field')
-              .attr('id')
+            .closest('li.form-field')
+            .attr('id')
       h.toggleEdit(targetID)
       e.handled = true
     }
@@ -1171,7 +1192,7 @@ const FormBuilder = function(opts, element) {
   $stage.on('keyup', 'input.error', ({ target }) => $(target).removeClass('error'))
 
   // update preview for description
-  $stage.on('keyup', 'input[name="description"]', function(e) {
+  $stage.on('keyup', 'input[name="description"]', function (e) {
     const $field = $(e.target).parents('.form-field:eq(0)')
     const closestToolTip = $('.tooltip-element', $field)
     const ttVal = $(e.target).val()
@@ -1202,7 +1223,7 @@ const FormBuilder = function(opts, element) {
   })
 
   // format name attribute
-  $stage.on('blur', 'input.fld-name', function(e) {
+  $stage.on('blur', 'input.fld-name', function (e) {
     e.target.value = safename(e.target.value)
     if (e.target.value === '') {
       $(e.target)
@@ -1218,7 +1239,7 @@ const FormBuilder = function(opts, element) {
   })
 
   // Copy field
-  $stage.on('click touchstart', '.icon-copy', function(e) {
+  $stage.on('click touchstart', '.icon-copy', function (e) {
     e.preventDefault()
     const currentItem = $(e.target)
       .parent()
@@ -1232,13 +1253,13 @@ const FormBuilder = function(opts, element) {
   // Delete field
   $stage.on('click touchstart', '.delete-confirm', e => {
     e.preventDefault()
-    const selOpt=$(e.target).parent().parent('li').attr('id')
-    const curPage=$('#'+$(e.target).parent().parent().parent().parent().parent().attr('id'))
+    const selOpt = $(e.target).parent().parent('li').attr('id')
+    const curPage = $('#' + $(e.target).parent().parent().parent().parent().parent().attr('id'))
     const r = confirm('Do you really want to delete?');
-    if(r!=true)
-    return false
-    $('.selElement option[value='+selOpt+']',curPage).remove();
-    $('.selElement',curPage).multiselect('rebuild')
+    if (r != true)
+      return false
+    $('.selElement option[value=' + selOpt + ']', curPage).remove();
+    $('.selElement', curPage).multiselect('rebuild')
     const buttonPosition = e.target.getBoundingClientRect()
     const bodyRect = document.body.getBoundingClientRect()
     const coords = {
@@ -1253,7 +1274,7 @@ const FormBuilder = function(opts, element) {
 
     document.addEventListener(
       'modalClosed',
-      function() {
+      function () {
         $field.removeClass('deleting')
       },
       false
@@ -1291,12 +1312,12 @@ const FormBuilder = function(opts, element) {
   })
 
   // Attach a callback to toggle roles visibility
-  $stage.on('click', 'input.fld-access', function(e) {
+  $stage.on('click', 'input.fld-access', function (e) {
     const roles = $(e.target)
       .closest('.form-field')
       .find('.available-roles')
     const enableRolesCB = $(e.target)
-    roles.slideToggle(250, function() {
+    roles.slideToggle(250, function () {
       if (!enableRolesCB.is(':checked')) {
         $('input[type=checkbox]', roles).removeAttr('checked')
       }
@@ -1304,7 +1325,7 @@ const FormBuilder = function(opts, element) {
   })
 
   // Attach a callback to add new options
-  $stage.on('click', '.add-opt', function(e) {
+  $stage.on('click', '.add-opt', function (e) {
     e.preventDefault()
     const $optionWrap = $(e.target).closest('.field-options')
     const $multiple = $('[name="multiple"]', $optionWrap)
@@ -1317,14 +1338,43 @@ const FormBuilder = function(opts, element) {
     }
     const name = $firstOption.attr('name').replace(/-option$/, '')
     $('.sortable-options', $optionWrap).append(selectFieldOptions(name, false, isMultiple))
-    const lastLi=$('.sortable-options', $optionWrap).children().last('li')
-    const otherElementList=$($optionWrap.parent().parent().parent()).siblings()
-    const optionL=[]
-    $.each(otherElementList,function(i,j){
-      optionL.push({value:j.id,label:j.type})
+    const lastLi = $('.sortable-options', $optionWrap).children().last('li')
+    const otherElementList = $($optionWrap.parent().parent().parent()).siblings()
+    const optionL = []
+    $.each(otherElementList, function (i, j) {
+      optionL.push({ value: j.id, label: j.type })
     })
     lastLi.find('.selElement').attr('multiple', 'multiple')
-                              .multiselect('dataprovider', optionL);
+      .multiselect('dataprovider', optionL);
+  })
+  // add new damaged item
+  $stage.on('click', '.add-item', function (e) {
+    e.preventDefault()
+   const newLi='<li class="damLi"><input type="text" placeholder="new item" class="damItemName"><input type="number" placeholder="0" class="damItemCost"><a class="itemRemove btn icon-cancel" title="Remove Element"></a></li>'
+
+   $(e.target).parent().parent().siblings('.customItem-wrap').find('.damDiv').append(newLi)
+
+  })
+  $stage.on('click','.itemRemove',function(e){
+    const __theseli=$(e.target)
+    let vals=0
+    const hh=__theseli.parent().siblings().find('input[type=number]')
+    $.each(hh,function(k,l){
+      vals=parseInt(vals)+parseInt($(l).val())
+    })
+    __theseli.parent().parent().parent().siblings('.damageCal-wrap').find('input').val(vals)
+    $(e.target).parent('li').remove()
+  })
+ 
+  $stage.on('keyup','.damItemCost',function(e){
+    const __theseli=$(e.target)
+    let vals=0
+    const hh=__theseli.parent().parent().find('input[type=number]')
+    $.each(hh,function(k,l){
+      vals=parseInt(vals)+parseInt($(l).val())
+    })
+    
+    __theseli.parent().parent().parent().siblings('.damageCal-wrap').find('input').val(vals)
   })
 
   $stage.on('mouseover mouseout', '.remove, .del-button', e =>
@@ -1404,58 +1454,58 @@ const FormBuilder = function(opts, element) {
 
   return formBuilder
 }
-;(function($) {
-  const methods = {
-    init: (options, elems) => {
-      const { i18n, ...opts } = jQuery.extend({}, defaultOptions, options, true)
-      config.opts = opts
-      const i18nOpts = jQuery.extend({}, defaultI18n, i18n, true)
-      methods.instance = {
-        actions: {
-          getFieldTypes: null,
-          addField: null,
-          clearFields: null,
-          closeAllFieldEdit: null,
-          getData: null,
-          removeField: null,
-          save: null,
-          setData: null,
-          setLang: null,
-          showData: null,
-          toggleAllFieldEdit: null,
-          toggleFieldEdit: null,
-        },
-        get formData() {
-          return methods.instance.actions.getData && methods.instance.actions.getData('json')
-        },
-        promise: new Promise(function(resolve, reject) {
-          mi18n
-            .init(i18nOpts)
-            .then(() => {
-              elems.each(i => {
-                const formBuilder = new FormBuilder(opts, elems[i])
-                $(elems[i]).data('formBuilder', formBuilder)
-                Object.assign(methods, formBuilder.actions)
-                methods.instance.actions = formBuilder.actions
+  ; (function ($) {
+    const methods = {
+      init: (options, elems) => {
+        const { i18n, ...opts } = jQuery.extend({}, defaultOptions, options, true)
+        config.opts = opts
+        const i18nOpts = jQuery.extend({}, defaultI18n, i18n, true)
+        methods.instance = {
+          actions: {
+            getFieldTypes: null,
+            addField: null,
+            clearFields: null,
+            closeAllFieldEdit: null,
+            getData: null,
+            removeField: null,
+            save: null,
+            setData: null,
+            setLang: null,
+            showData: null,
+            toggleAllFieldEdit: null,
+            toggleFieldEdit: null,
+          },
+          get formData() {
+            return methods.instance.actions.getData && methods.instance.actions.getData('json')
+          },
+          promise: new Promise(function (resolve, reject) {
+            mi18n
+              .init(i18nOpts)
+              .then(() => {
+                elems.each(i => {
+                  const formBuilder = new FormBuilder(opts, elems[i])
+                  $(elems[i]).data('formBuilder', formBuilder)
+                  Object.assign(methods, formBuilder.actions)
+                  methods.instance.actions = formBuilder.actions
+                })
+                delete methods.instance.promise
+                resolve(methods.instance)
               })
-              delete methods.instance.promise
-              resolve(methods.instance)
-            })
-            .catch(opts.notify.error)
-        }),
-      }
+              .catch(opts.notify.error)
+          }),
+        }
 
-      return methods.instance
-    },
-  }
-
-  jQuery.fn.formBuilder = function(methodOrOptions = {}, ...args) {
-    if (methods[methodOrOptions]) {
-      return methods[methodOrOptions].apply(this, args)
-    } else {
-      const instance = methods.init(methodOrOptions, this)
-      Object.assign(methods, instance)
-      return instance
+        return methods.instance
+      },
     }
-  }
-})(jQuery)
+
+    jQuery.fn.formBuilder = function (methodOrOptions = {}, ...args) {
+      if (methods[methodOrOptions]) {
+        return methods[methodOrOptions].apply(this, args)
+      } else {
+        const instance = methods.init(methodOrOptions, this)
+        Object.assign(methods, instance)
+        return instance
+      }
+    }
+  })(jQuery)

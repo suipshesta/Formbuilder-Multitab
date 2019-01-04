@@ -166,6 +166,18 @@ jQuery(function ($) {
         label: 'readonly',
         value: false,
       },
+      customItem: {
+        type: 'customItem',// custom item add remove
+        label: 'Goods Lost Destroyed Item',
+        multiple: true,
+        items: {
+          'item1': 23,
+          'item2': 55,
+          'item3': 89,
+          'item4':88
+        },
+        style: 'border: 1px solid red',
+      }
     },
     targetForm: {
       asdf: {
