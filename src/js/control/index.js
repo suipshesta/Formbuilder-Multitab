@@ -9,7 +9,7 @@ import controlFineUploader from './file.fineuploader';
 import controlTextarea from './textarea';
 import controlTinymce from './textarea.tinymce';
 import controlQuill from './textarea.quill';
-import targetForm from './targetform';
+import controlTarget from './targetform';
 
 export default {
   controlAutocomplete,
@@ -23,6 +23,6 @@ export default {
   controlTextarea,
   controlTinymce,
   controlQuill,
-  targetForm,
+  controlTarget,
 };
 

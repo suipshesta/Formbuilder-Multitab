@@ -178,6 +178,7 @@ const FormBuilder = function (opts, element) {
   // builds the standard formbuilder datastructure for a field definition
   const prepFieldVars = function ($field, isNew = false) {
     let field = {}
+    console.log(field)
     if ($field instanceof jQuery) {
       // get the default type etc & label for this field
       field.type = $field[0].dataset.type

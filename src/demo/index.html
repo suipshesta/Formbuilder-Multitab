@@ -20,8 +20,17 @@
     <h1 class="formrender-title">jQuery formRender -
       <button class="editForm">Edit</button>
     </h1>
-    <div id="stage1" class="build-wrap"></div>
-    <form class="render-wrap"></form>
+    <!-- <div id="stage1" class="build-wrap"></div>
+    <form class="render-wrap"></form> -->
+    <form action="" id="form-builder-pages">
+      <ul id="tabs">
+        <li><a href="#page-1">Page 1</a></li>
+        <li id="add-page-tab"><a href="#new-page">+ Page</a></li>
+      </ul>
+      <div id="page-1" class="fb-editor"></div>
+      <div id="new-page"></div>
+      
+    </form>
     <div class="action-buttons formbuilder-actions">
       <h2>Actions</h2>
       <button id="getFieldTypes" type="button">Get Field Types</button>
@@ -69,14 +78,20 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css"
     type="text/css" />
-
+   
+    <link rel="stylesheet" href=" https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"
+    type="text/css" />
   <style>
 /* [data-type="targetForm"] {display:none !important} */
     .form-wrap.form-builder .frmb .sortable-options>li {
       display: flex;
 
     }
-
+div .ui-tabs-nav .ui-state-default input {
+    border: none;
+    padding: 3px 6px;
+    background: transparent;
+}
     /* option:empty
 {
   display:none;

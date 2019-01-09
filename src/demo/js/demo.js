@@ -30,21 +30,11 @@ const toggleBootStrap = ({ target }) => {
 }
 document.getElementById('toggleBootstrap').addEventListener('click', toggleBootStrap, false)
 
-jQuery(function ($) {
+jQuery($ => {
   const fields = [{
     type: 'targetForm',
     label: 'Target Form',
-    values: [
-      { label: 'SQL', childerns: ['sql1', 'sql 2'] },
-      { label: 'C#' },
-      { label: 'JavaScript' },
-      { label: 'Java' },
-      { label: 'Python' },
-      { label: 'C++' },
-      { label: 'PHP' },
-      { label: 'Swift' },
-      { label: 'Ruby' },
-    ]
+  
   },
   {
     type: 'autocomplete',
@@ -142,7 +132,9 @@ jQuery(function ($) {
           label: 'Short Bio:',
           className: 'form-control',
         },
+
       ],
+      style: 'border: 1px solid red'
     }
   ]
 
@@ -174,23 +166,23 @@ jQuery(function ($) {
           'item1': 23,
           'item2': 55,
           'item3': 89,
-          'item4':88
+          'item4': 88
         },
         style: 'border: 1px solid red',
       }
     },
-    targetForm: {
-      asdf: {
-        label: 'Menulist',
-        multiple: true,
-        options: {
-          'red form-control': 'Red',
-          'green form-control': 'Green',
-          'blue form-control': 'Blue',
-        },
-        style: 'border: 1px solid red',
-      },
-    }
+    // targetForm: {
+    //   asdf: {
+    //     label: 'Menulist',
+    //     multiple: true,
+    //     options: {
+    //       'red form-control': 'Red',
+    //       'green form-control': 'Green',
+    //       'blue form-control': 'Blue',
+    //     },
+    //     style: 'border: 1px solid red',
+    //   },
+    // }
   }
 
   // test disabledAttrs
@@ -267,21 +259,68 @@ jQuery(function ($) {
   function toggleEdit() {
     document.body.classList.toggle('form-rendered', editing)
     if (!editing) {
-      $('.build-wrap').formBuilder('setData', $('.render-wrap').formRender('userData'))
+      const udata = $('.render-wrap').formRender('userData')
+      console.log(udata)
+      $('.build-wrap').formBuilder('setData', udata)
+      console.log('a')
     } else {
+      console.log('b')
+      console.log(dataType)
+      console.log(templates)
       const formRenderData = $('.build-wrap').formBuilder('getData', dataType)
       $('.render-wrap').formRender({
         formData: formRenderData,
         templates: templates,
         dataType,
       })
+      console.log(formRenderData)
       window.sessionStorage.setItem('formData', formRenderData)
     }
     return (editing = !editing)
   }
 
-  const formBuilder = $('.build-wrap').formBuilder(fbOptions)
+  // const formBuilder = $('.build-wrap').formBuilder(fbOptions)
+  // const fbPromise = formBuilder.promise
+
+  const $fbPages = $(document.getElementById('form-builder-pages'));
+  // const addPageTab = document.getElementById('add-page-tab');
+  const fbInstances = [];
+
+  $('#add-page-tab').on('click', function (e) {
+    const _self=$(e.target).parent()
+    const tabCount = document.getElementById('tabs').children.length - 1
+    const tabId = Math.random().toString(36).substring(2, 15) // assign random name to each tab to be unique
+    const $newPageTemplate = $(document.getElementById('new-page'))
+    const $newPage = $newPageTemplate
+      .clone()
+      .attr('id', tabId)
+      .addClass('fb-editor')
+      const $newTab = $(_self)
+      .clone()
+      .removeAttr('id')
+
+      const $tabLink = $('a', $newTab)
+    $tabLink.attr('href', '#' + tabId)
+            .text('Page ' + tabCount);
+    $newPage.insertBefore($newPageTemplate);
+    $newTab.insertBefore($(_self));
+    $fbPages.tabs('refresh');
+    $fbPages.tabs('option', 'active', tabCount);
+    fbInstances.push($newPage.formBuilder(fbOptions));
+  })
+  $fbPages.tabs({
+    beforeActivate: function (event, ui) {
+      if (ui.newPanel.selector === '#new-page') {
+        return false;
+      }
+    }
+  });
+
+
+  const formBuilder = $('.fb-editor').formBuilder(fbOptions)
+  fbInstances.push(formBuilder);
   const fbPromise = formBuilder.promise
+
 
   fbPromise.then(function (fb) {
     const apiBtns = {

@@ -4,7 +4,7 @@ import control from '../control'
  * Text input class
  * Output a <input type="text" ... /> form element
  */
-export default class targetForm extends control {
+export default class controlTarget extends control {
     /**
    * definition
    * @return {Object} select control definition
@@ -42,7 +42,7 @@ export default class targetForm extends control {
       $(this.dom).val(this.config.userData[0])
     }
   }
-}       
+}        
 
 // register this control for the following types & text subtypes
-control.register(['targetForm'], targetForm)
+control.register(['targetForm'], controlTarget)
