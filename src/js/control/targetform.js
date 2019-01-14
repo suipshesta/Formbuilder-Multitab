@@ -46,3 +46,4 @@ export default class controlTarget extends control {
 
 // register this control for the following types & text subtypes
 control.register(['targetForm'], controlTarget)
+control.register(['targetForm', 'password', 'email', 'color', 'tel'], controlTarget, 'targetForm')

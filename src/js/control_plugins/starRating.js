@@ -8,7 +8,7 @@ window.fbControls.push(function(controlClass) {
   /**
    * Star rating class
    */
-  class controlStarRating extends controlClass {
+  class asdfcontrolStarRating extends controlClass {
 
     /**
      * Class configuration - return the icons & label related to this control
@@ -49,6 +49,6 @@ window.fbControls.push(function(controlClass) {
   }
 
   // register this control for the following types & text subtypes
-  controlClass.register('starRating', controlStarRating);
-  return controlStarRating;
+  controlClass.register('starRating', asdfcontrolStarRating);
+  return asdfcontrolStarRating;
 });

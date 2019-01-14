@@ -23,8 +23,8 @@ export default class controlAutocomplete extends control {
    */
   build() {
     const { values, type, ...data } = this.config
-    console.log(this)
-    console.log(values)
+    // console.log(this)
+    // console.log(values)
     const keyboardNav = e => {
       const list = e.target.nextSibling.nextSibling
       const hiddenField = e.target.nextSibling

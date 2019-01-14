@@ -34,7 +34,8 @@ jQuery($ => {
   const fields = [{
     type: 'targetForm',
     label: 'Target Form',
-  
+    icon: '🌟',
+
   },
   {
     type: 'autocomplete',
@@ -59,6 +60,14 @@ jQuery($ => {
     },
     icon: '🌟',
   },
+
+// {
+//   label: 'Star Rating',
+//   attrs: {
+//     type: 'newBin',
+//   },
+//   icon: '🌟',
+// }
   ]
 
   const replaceFields = [
@@ -260,20 +269,20 @@ jQuery($ => {
     document.body.classList.toggle('form-rendered', editing)
     if (!editing) {
       const udata = $('.render-wrap').formRender('userData')
-      console.log(udata)
+      // console.log(udata)
       $('.build-wrap').formBuilder('setData', udata)
-      console.log('a')
+      // console.log('a')
     } else {
-      console.log('b')
-      console.log(dataType)
-      console.log(templates)
+      // console.log('b')
+      // console.log(dataType)
+      // console.log(templates)
       const formRenderData = $('.build-wrap').formBuilder('getData', dataType)
       $('.render-wrap').formRender({
         formData: formRenderData,
         templates: templates,
         dataType,
       })
-      console.log(formRenderData)
+      // console.log(formRenderData)
       window.sessionStorage.setItem('formData', formRenderData)
     }
     return (editing = !editing)
@@ -287,7 +296,7 @@ jQuery($ => {
   const fbInstances = [];
 
   $('#add-page-tab').on('click', function (e) {
-    const _self=$(e.target).parent()
+    const _self = $(e.target).parent()
     const tabCount = document.getElementById('tabs').children.length - 1
     const tabId = Math.random().toString(36).substring(2, 15) // assign random name to each tab to be unique
     const $newPageTemplate = $(document.getElementById('new-page'))
@@ -295,19 +304,30 @@ jQuery($ => {
       .clone()
       .attr('id', tabId)
       .addClass('fb-editor')
-      const $newTab = $(_self)
+    const $newTab = $(_self)
       .clone()
       .removeAttr('id')
 
-      const $tabLink = $('a', $newTab)
-    $tabLink.attr('href', '#' + tabId)
-            .text('Page ' + tabCount);
+    const $tabLink = $('a', $newTab)
+    $tabLink.attr('href', '#' + tabId).text('Page ' + tabCount);
     $newPage.insertBefore($newPageTemplate);
     $newTab.insertBefore($(_self));
     $fbPages.tabs('refresh');
     $fbPages.tabs('option', 'active', tabCount);
     fbInstances.push($newPage.formBuilder(fbOptions));
+   
   })
+  $(document).on('click','.testClick',function(){
+    console.log(fbInstances)
+    const forData='[{"type":"select","required":true,"label":"Mode of&nbsp; Transport","className":"form-control","name":"select-1545714463533","wrapper_class":"col-lg-6","values":[{"label":"Ship","value":"ship","selected":true,"showHide":false,"mapElement":[]},{"label":"Air Plane","value":"airplane","showHide":false,"mapElement":[]},{"label":"Road Vehicle","value":"vehcile","showHide":false,"mapElement":[]},{"label":"Train","value":"train","showHide":false,"mapElement":[]}]},{"type":"text","required":true,"label":"Name of Carrier","className":"form-control","name":"text-1545714629448","subtype":"text","wrapper_class":"col-lg-6"},{"type":"date","required":true,"label":"Date of Loading","className":"form-control","name":"date-1545714668700","wrapper_class":"col-lg-6"},{"type":"date","required":true,"label":"Arrival Date","className":"form-control","name":"date-1545714688701","wrapper_class":"col-lg-6"},{"type":"select","required":true,"label":"Departure from","className":"form-control","name":"select-1545714741481","wrapper_class":"col-lg-6","values":[{"label":"Usa","value":"usa","selected":true,"showHide":false,"mapElement":[]},{"label":"Hong Kong","value":"hongkong","showHide":false,"mapElement":[]},{"label":"India","value":"india","showHide":false,"mapElement":[]}]},{"type":"select","required":true,"label":"Transport to","className":"form-control","name":"select-1545714743985","wrapper_class":"col-lg-6","values":[{"label":"Usa","value":"usa","selected":true,"showHide":false,"mapElement":[]},{"label":"Hong Kong","value":"hongkong","showHide":false,"mapElement":[]},{"label":"India","value":"india","showHide":false,"mapElement":[]}]},{"type":"text","required":true,"label":"Bill of Lading","className":"form-control","name":"text-1545714942949","subtype":"text","wrapper_class":"col-lg-12"},{"type":"checkbox-group","label":"Consignee","name":"checkbox-group-1545714965156","wrapper_class":"col-lg-6","values":[{"label":"Yes","value":"yes","showHide":true,"mapElement":["text-1545715022423","text-1545715040596","text-1545715056446","select-1545715076816"]}]},{"type":"text","label":"Consignee Name","className":"form-control","name":"text-1545715022423","subtype":"text","wrapper_class":"col-lg-6"},{"type":"text","label":"Address","className":"form-control","name":"text-1545715040596","subtype":"text","wrapper_class":"col-lg-6"},{"type":"text","label":"Post Code","className":"form-control","name":"text-1545715056446","subtype":"text","wrapper_class":"col-lg-6"},{"type":"select","label":"Country","className":"form-control","name":"select-1545715076816","wrapper_class":"col-lg-6","values":[{"label":"Usa","value":"usa","selected":true,"showHide":false,"mapElement":[]},{"label":"Hong Kong","value":"hongkong","showHide":false,"mapElement":[]},{"label":"India","value":"india","showHide":false,"mapElement":[]}]},{"type":"textarea","label":"Additional Information","className":"form-control","name":"textarea-1545716004850","subtype":"textarea","maxlength":"200","rows":"4"}]';
+    // fbInstances[0].actions.setData(forData);
+    fbInstances.forEach(element => {
+      element.actions.setData(forData)
+       console.log(element)
+    })
+  })
+
+
   $fbPages.tabs({
     beforeActivate: function (event, ui) {
       if (ui.newPanel.selector === '#new-page') {
