@@ -1,7 +1,7 @@
 site_name: formBuilder
 site_url: https://formbuilder.online
 site_dir: site/src/docs
-repo_url: https://github.com/kevinchappell/formBuilder
+repo_url: https://github.com/suipshesta/formbuildertabbed
 repo_name: 'GitHub'
 site_description: A jQuery plugin for drag and drop form creation
 theme:
