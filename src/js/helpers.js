@@ -746,6 +746,7 @@ export default class Helpers {
    * @param  {Boolean} animate
    */
   toggleEdit(fieldId, animate = true) {
+   
     const field = document.getElementById(fieldId)
     const $editPanel = $('.frm-holder', field)
     const $preview = $('.prev-holder', field)
@@ -763,9 +764,11 @@ export default class Helpers {
       this.formBuilder.currentEditPanel = $editPanel[0]
       config.opts.onOpenFieldEdit($editPanel[0])
       document.dispatchEvent(events.fieldEditOpened)
+      $('body').addClass('body-scrollzero')
     } else {
       config.opts.onCloseFieldEdit($editPanel[0])
       document.dispatchEvent(events.fieldEditClosed)
+      $('body').removeClass('body-scrollzero')
     }
   }
 
