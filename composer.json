@@ -1,5 +1,5 @@
 {
-  "name": "kevinchappell/form-builder",
+  "name": "SudipShrestha/form-builder",
   "type": "library",
   "description": "jQuery formBuilder",
   "keywords": [
@@ -8,12 +8,12 @@
     "formbuilder",
     "form builder"
   ],
-  "homepage": "https://formbuilder.online",
+  "homepage": "comming soon",
   "license": "MIT",
   "authors": [{
-    "name": "Kevin Chappell",
-    "email": "kevin.b.chappell@gmail.com",
-    "homepage": "https://kevin-chappell.com",
+    "name": "sudip Shrestha",
+    "email": "mr.void44@gmail.com",
+    "homepage": "comming sson",
     "role": "Developer"
   }]
 }
