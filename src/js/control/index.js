@@ -5,6 +5,7 @@ import controlHidden from './hidden';
 import controlParagraph from './paragraph';
 import controlSelect from './select';
 import controlText from './text';
+import controlAtomate from './automate';
 import controlFineUploader from './file.fineuploader';
 import controlTextarea from './textarea';
 import controlTinymce from './textarea.tinymce';
@@ -19,6 +20,7 @@ export default {
   controlParagraph,
   controlSelect,
   controlText,
+  controlAtomate,
   controlFineUploader,
   controlTextarea,
   controlTinymce,
