@@ -8,6 +8,7 @@ export const defaultOptions = {
   allowStageSort: true,
   append: false, // append non-editable content to the form.
   controlOrder: [
+    'automate',
     'autocomplete',
     'button',
     'checkbox-group',
@@ -23,6 +24,7 @@ export const defaultOptions = {
     'text',
     'textarea',
     'targetForm'
+    
   ],
   controlPosition: 'right',
   dataType: 'json',

@@ -122,6 +122,7 @@ const FormBuilder = function (opts, element) {
         }
       })
     } else {
+  
       prepFieldVars(control, true)
     }
   }
@@ -147,8 +148,10 @@ const FormBuilder = function (opts, element) {
   }
 
   $(d.controls).on('click', 'li', ({ target }) => {
+    console.log(target)
     const $control = $(target).closest('li')
     h.stopIndex = undefined
+    console.log($control)
     processControl($control)
     h.save.call(h)
   })
@@ -178,9 +181,10 @@ const FormBuilder = function (opts, element) {
   // builds the standard formbuilder datastructure for a field definition
   const prepFieldVars = function ($field, isNew = false) {
     let field = {}
-    // console.log(field)
+     console.log(field)
     if ($field instanceof jQuery) {
       // get the default type etc & label for this field
+      console.log($field)
       field.type = $field[0].dataset.type
       if (field.type) {
         // check for a custom type
@@ -218,7 +222,7 @@ const FormBuilder = function (opts, element) {
       field.name = nameAttr(field)
     }
 
-    if (isNew && ['text', 'number', 'file', 'date', 'select', 'textarea', 'autocomplete'].includes(field.type)) {
+    if (isNew && ['text', 'number','automate', 'file', 'date', 'select', 'textarea', 'autocomplete'].includes(field.type)) {
       field.className = field.className || 'form-control'
     }
 
@@ -228,7 +232,7 @@ const FormBuilder = function (opts, element) {
     }
 
     if (isNew) {
-      field = Object.assign({}, field, opts.onAddField(data.lastID, field))
+    //  field = Object.assign({}, field, opts.onAddField(data.lastID, field))
       setTimeout(() => document.dispatchEvent(events.fieldAdded), 10)
     }
 
@@ -333,6 +337,7 @@ const FormBuilder = function (opts, element) {
         'options',
       ],
       text: defaultAttrs.concat(['subtype', 'maxlength']),
+      automate: defaultAttrs.concat(['subtype', 'maxlength']),
       date: defaultAttrs,
       file: defaultAttrs.concat(['subtype', 'multiple']),
       header: ['label', 'subtype', 'className', 'access'],
@@ -874,6 +879,7 @@ const FormBuilder = function (opts, element) {
 
   // Append the new field to the editor
   const appendNewField = function (values, isNew = true) {
+    console.log(values)
     const type = values.type || 'text'
     const label = values.label || (isNew ? i18n.get(type) || mi18n.get('label') : '')
     const disabledFieldButtons = opts.disabledFieldButtons[type] || values.disabledFieldButtons

@@ -379,6 +379,7 @@ export const unique = array => {
  * @param  {Array} arr
  */
 export const removeFromArray = (val, arr) => {
+  console.log(arr)
   const index = arr.indexOf(val)
 
   if (index > -1) {

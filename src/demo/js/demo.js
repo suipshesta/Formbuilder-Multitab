@@ -38,6 +38,13 @@ jQuery($ => {
 
   },
   {
+    type:'automate',
+    label:'automate',
+  required:true,
+  icon: '🌟',
+
+},
+  {
     type: 'autocomplete',
     label: 'Custom Autocomplete',
     required: true,

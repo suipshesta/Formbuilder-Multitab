@@ -14,6 +14,7 @@ export default class controlAtomate extends control {
       mi18n: {
         date: 'dateField',
         file: 'fileUpload',
+        atomate:'automate'
       },
     }
   }
