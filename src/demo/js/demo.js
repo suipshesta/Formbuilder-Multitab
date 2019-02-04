@@ -32,19 +32,6 @@ document.getElementById('toggleBootstrap').addEventListener('click', toggleBootS
 
 jQuery($ => {
   const fields = [{
-    type: 'targetForm',
-    label: 'Target Form',
-    icon: '🌟',
-
-  },
-  {
-    type:'automate',
-    label:'automate',
-  required:true,
-  icon: '🌟',
-
-},
-  {
     type: 'autocomplete',
     label: 'Custom Autocomplete',
     required: true,
