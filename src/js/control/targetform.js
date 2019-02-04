@@ -11,11 +11,11 @@ export default class controlTarget extends control {
    */
   static get definition() {
     return {
-      inactive: ['checkbox'],
-      mi18n: {
-        minSelectionRequired: 'minSelectionRequired',
-      },
-    }
+      icon: '🌟',
+      i18n: {
+        default: 'Target Form'
+      }
+    };
   }
  
 
