@@ -765,10 +765,10 @@ export default class Helpers {
       config.opts.onOpenFieldEdit($editPanel[0])
       document.dispatchEvent(events.fieldEditOpened)
       $('body').addClass('body-scrollzero')
-      $('.form-element').slimScroll({
-        sixe:'8px',
-        allowPageScroll:!0,
-        alwaysVisible:!0,
+      $('.form-elements').slimScroll({
+        size: '8px',  
+        allowPageScroll: true, 
+        alwaysVisible: true     
       })
     } else {
       config.opts.onCloseFieldEdit($editPanel[0])

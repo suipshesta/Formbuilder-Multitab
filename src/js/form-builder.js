@@ -982,6 +982,7 @@ const FormBuilder = function (opts, element) {
 
   // Select field html, since there may be multiple
   const selectFieldOptions = function (name, optionData, multipleSelect) {
+    console.log('asdf')
     const optionInputType = {
       selected: multipleSelect ? 'checkbox' : 'radio',
     }

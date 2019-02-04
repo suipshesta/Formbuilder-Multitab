@@ -11,7 +11,7 @@ export default class controlTarget extends control {
    */
   static get definition() {
     return {
-      icon: '🌟',
+      // icon: '🌟',
       i18n: {
         default: 'Target Form'
       }
