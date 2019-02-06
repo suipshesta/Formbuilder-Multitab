@@ -746,7 +746,6 @@ export default class Helpers {
    * @param  {Boolean} animate
    */
   toggleEdit(fieldId, animate = true) {
-   
     const field = document.getElementById(fieldId)
     const $editPanel = $('.frm-holder', field)
     const $preview = $('.prev-holder', field)
@@ -768,7 +767,8 @@ export default class Helpers {
       $('.form-elements').slimScroll({
         size: '8px',  
         allowPageScroll: true, 
-        alwaysVisible: true     
+        alwaysVisible: true,
+        height:'500px'     
       })
     } else {
       config.opts.onCloseFieldEdit($editPanel[0])

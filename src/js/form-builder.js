@@ -982,7 +982,6 @@ const FormBuilder = function (opts, element) {
 
   // Select field html, since there may be multiple
   const selectFieldOptions = function (name, optionData, multipleSelect) {
-    console.log('asdf')
     const optionInputType = {
       selected: multipleSelect ? 'checkbox' : 'radio',
     }
@@ -1022,7 +1021,11 @@ const FormBuilder = function (opts, element) {
     }
     optionInputs.push(m('a', null, removeAttrs))
 
-    return m('li', optionInputs).outerHTML
+    const gg=m('li', optionInputs).outerHTML
+
+    // console.log(gg)
+  //  mycustomfun('asdf')
+    return gg
   }
 
   const cloneItem = function cloneItem(currentItem) {
@@ -1330,6 +1333,7 @@ const FormBuilder = function (opts, element) {
   // Attach a callback to add new options
   $stage.on('click', '.add-opt', function (e) {
     e.preventDefault()
+    console.log(e)
     const $optionWrap = $(e.target).closest('.field-options')
     const $multiple = $('[name="multiple"]', $optionWrap)
     const $firstOption = $('.option-selected:eq(0)', $optionWrap)
@@ -1341,15 +1345,34 @@ const FormBuilder = function (opts, element) {
     }
     const name = $firstOption.attr('name').replace(/-option$/, '')
     $('.sortable-options', $optionWrap).append(selectFieldOptions(name, false, isMultiple))
-    const lastLi = $('.sortable-options', $optionWrap).children().last('li')
-    const otherElementList = $($optionWrap.parent().parent().parent()).siblings()
-    const optionL = []
+    // const lastLi = $('.sortable-options', $optionWrap).children().last('li')
+    const otherElementList = $($optionWrap.parent().parent().parent().parent()).siblings()
+    // const optionL = []
+    console.log(otherElementList)
+    let tt=''
     $.each(otherElementList, function (i, j) {
-      optionL.push({ value: j.id, label: j.type })
+      tt=getFieldName(j)
+      console.log(tt)
+      // optionL.push({ value: tt, label:tt+ j.type })
     })
-    lastLi.find('.selElement').attr('multiple', 'multiple')
-      .multiselect('dataprovider', optionL);
+   
+    // lastLi.find('.selElement').attr('multiple', 'multiple')
+    //   .multiselect('dataprovider', optionL);
   })
+  /**
+   * Detects the type of user defined attribute
+   * @param {String} ele attribute name
+   * @return {string} type of user attr
+   */
+  function getFieldName(ele) {
+    const ii = $(ele).find('.prev-holder > div').attr('class').split(' ').pop()
+    if(ele.type==='checkbox-group' || ele.type==='radio-group'){
+      return ele.type + '-' + ii.split('-')[3] + '-' + 'preview'
+    }else{
+      return ele.type + '-' + ii.split('-')[2] + '-' + 'preview'
+    }
+    
+  }
   // add new damaged item
   $stage.on('click', '.add-item', function (e) {
     e.preventDefault()
