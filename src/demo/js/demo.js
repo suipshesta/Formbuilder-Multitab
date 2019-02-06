@@ -415,9 +415,7 @@ return false
    * @return {string} type of user attr
    */
   function getFieldName(ele) {
-     console.log(ele)
   const jj=$(ele).find('.prev-holder > div').attr('class')
-  // console.log(jj)
   if(jj!==undefined){
     const ii = jj.split(' ').pop()
     if(ele.type==='checkbox-group' || ele.type==='radio-group'){

@@ -1345,19 +1345,19 @@ const FormBuilder = function (opts, element) {
     }
     const name = $firstOption.attr('name').replace(/-option$/, '')
     $('.sortable-options', $optionWrap).append(selectFieldOptions(name, false, isMultiple))
-    // const lastLi = $('.sortable-options', $optionWrap).children().last('li')
+     const lastLi = $('.sortable-options', $optionWrap).children().last('li')
     const otherElementList = $($optionWrap.parent().parent().parent().parent()).siblings()
-    // const optionL = []
+     const optionL = []
     console.log(otherElementList)
     let tt=''
     $.each(otherElementList, function (i, j) {
-      tt=getFieldName(j)
-      console.log(tt)
-      // optionL.push({ value: tt, label:tt+ j.type })
+       tt=getFieldName(j)
+       optionL.push({ value: tt, label:tt+ ' ['+j.type+']' })
     })
-   
-    // lastLi.find('.selElement').attr('multiple', 'multiple')
-    //   .multiselect('dataprovider', optionL);
+   console.log(optionL)
+  lastLi.find('.selElement').attr('multiple', 'multiple')
+          .multiselect()
+          .multiselect('dataprovider', optionL)
   })
   /**
    * Detects the type of user defined attribute
