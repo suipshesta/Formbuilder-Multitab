@@ -164,12 +164,12 @@ jQuery($ => {
         value: 'col-lg-4'
       }
     },
-    'text': {
-      wrapper_class: {
-        label: 'wrapper_class',
-        value: 'col-lg-4'
-      }
-    },
+    // 'text': {
+    //   wrapper_class: {
+    //     label: 'wrapper_class',
+    //     value: 'col-lg-4'
+    //   }
+    // },
     'date': {
       wrapper_class: {
         label: 'wrapper_class',
@@ -215,6 +215,38 @@ jQuery($ => {
         },
         style: 'border: 1px solid red',
       },
+    },
+    text: {
+      asdf: {
+        label: 'Class',
+        multiple: true,
+        options: {
+          'red form-control': 'Red',
+          'green form-control': 'Green',
+          'blue form-control': 'Blue',
+        },
+        style: 'border: 1px solid red',
+      },
+      readonly: {
+        label: 'readonly',
+        value: false,
+      },
+      customItem: {
+        type: 'customItem',// custom item add remove
+        label: 'Goods Lost Destroyed Item',
+        multiple: true,
+        items: {
+          'col1': ['select','textarea','checkbox','radio','text'],
+          'col2': ['select','textarea','checkbox','radio','text'],
+          'col3': ['select','textarea','checkbox','radio','text'],
+          'col4': ['select','textarea','checkbox','radio','text']
+        },
+        style: 'border: 1px solid red',
+      },
+      wrapper_class: {
+            label: 'wrapper_class',
+            value: 'col-lg-4'
+          }
     }
   }
 

@@ -629,28 +629,31 @@ const FormBuilder = function (opts, element) {
    * @return {String}         select markup
    */
   function customItem(name, fieldData) {
+    console.log(name)
+    console.log(fieldData)
      const { items: items,label:label} = fieldData
      const label1 = `<label>${label}</label>`
      let inputCol = '';
      let calDamage=0;
+     const tt=[{label: 'Text Field', value: 'text'},{label: 'Text Field', value: 'text'},{label: 'Text Field', value: 'text'}]
      for (const property in items) {
        if (items.hasOwnProperty(property)) {
-         inputCol += '<li class="damLi">' + m('input', null, { type: 'text', value: property,class:'damItemName' }).outerHTML + m('input', null, { type: 'number', value: items[property] ,class:'damItemCost'}).outerHTML + '<a class="itemRemove btn icon-cancel" title="Remove Element"></a></li>'
+         console.log(items[property])
+         inputCol += '<li class="damLi">' + m('input', null, { type: 'text', value: property,class:'damItemName' }).outerHTML +  customSelectAttr('subtype',fieldData,tt).outerHTML+ '<a class="itemRemove btn icon-cancel" title="Remove Element"></a></li>'
         calDamage=calDamage+items[property]
         }
+      
      }
+     console.log(inputCol)
      const optionActions = [m('a', 'Add Item+', { className: 'add add-item' })]
      const optionActionsWrap = m('div', optionActions, { className: 'option-actions' })
      const optionsWrap = m('div', optionActionsWrap, { className: 'sortable-options-wrap' }).outerHTML
      
-     const calcInput=m('input',null,{type:'number',value:calDamage}).outerHTML
-
+    
      const inputWrap = `<div class="input-wrap damDiv sortable-options-wrap">${inputCol}</div>`
-     const resultDamage = `<div class="input-wrap sortable-options-wrap">${calcInput}</div>`
 
      const mdom1 = `<div class="form-group ${name}-wrap">${label1}${inputWrap}</div>${optionsWrap}`
-     const mdom2 = `<div class="form-group damageCal-wrap"><label>Total Damage</label>${resultDamage}</div>`
-     return `${mdom1}${mdom2}`
+     return `${mdom1}`
   }
 
   const boolAttribute = (name, values, labels = {}) => {
@@ -755,15 +758,17 @@ const FormBuilder = function (opts, element) {
       className: `form-group ${attribute}-wrap`,
     }).outerHTML
   }
-
-  /**
+/**
    * selectAttribute
    * @param  {String} attribute  attribute name
    * @param  {Object} values     aka attrs
    * @param  {Array} optionData  select field option data
    * @return {String}            select input makrup
    */
-  const selectAttribute = (attribute, values, optionData) => {
+  const customSelectAttr=(attribute, values, optionData)=>{
+    console.log(attribute)
+    console.log(values)
+    console.log(optionData)
     const selectOptions = optionData.map((option, i) => {
       let optionAttrs = Object.assign(
         {
@@ -776,8 +781,51 @@ const FormBuilder = function (opts, element) {
         optionAttrs.selected = true
       }
       optionAttrs = trimObj(optionAttrs)
-      return m('option', optionAttrs.label, optionAttrs)
+     const jj= m('option', optionAttrs.label, optionAttrs)
+      console.log(jj)
+      return jj
     })
+    console.log(selectOptions)
+    const selectAttrs = {
+      id: attribute + '-' + data.lastID,
+      name: attribute,
+      className: `fld-${attribute} form-control`,
+    }
+    const labelText = mi18n.get(attribute) || capitalize(attribute) || ''
+    const label = m('label', labelText, { for: selectAttrs.id })
+    const select = m('select', selectOptions, selectAttrs)
+    return select
+
+  }
+  /**
+   * selectAttribute
+   * @param  {String} attribute  attribute name
+   * @param  {Object} values     aka attrs
+   * @param  {Array} optionData  select field option data
+   * @return {String}            select input makrup
+   */
+  const selectAttribute = (attribute, values, optionData) => {
+    console.log(attribute)
+    console.log(values)
+    console.log(optionData)
+    const selectOptions = optionData.map((option, i) => {
+      console.log(option)
+      let optionAttrs = Object.assign(
+        {
+          label: `${i18n.option} ${i}`,
+          value: undefined,
+        },
+        option
+      )
+      if (option.value === values[attribute]) {
+        optionAttrs.selected = true
+      }
+      optionAttrs = trimObj(optionAttrs)
+     const jj= m('option', optionAttrs.label, optionAttrs)
+      console.log(jj)
+      return jj
+    })
+    console.log(selectOptions)
     const selectAttrs = {
       id: attribute + '-' + data.lastID,
       name: attribute,
@@ -791,7 +839,9 @@ const FormBuilder = function (opts, element) {
       className: `form-group ${selectAttrs.name}-wrap`,
     })
 
-    return attrWrap.outerHTML
+    const uu= attrWrap.outerHTML
+    console.log(uu)
+    return uu
   }
 
   /**
