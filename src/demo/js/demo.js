@@ -1,13 +1,22 @@
 import '../sass/demo.scss'
-import { insertStyle, removeStyle } from '../../js/utils'
-import { builderActions, renderActions, demoActions } from './actionButtons'
+import {
+  insertStyle,
+  removeStyle
+} from '../../js/utils'
+import {
+  builderActions,
+  renderActions,
+  demoActions
+} from './actionButtons'
 
 const localeSessionKey = 'formBuilder-locale'
 const defaultLocale = 'en-US'
 
 const dataTypes = document.querySelectorAll('.demo-dataType')
 const dataType = window.sessionStorage.getItem('dataType') || 'json'
-const changeDataType = ({ target }) => {
+const changeDataType = ({
+  target
+}) => {
   window.sessionStorage.setItem('dataType', target.value)
   demoActions.resetDemo()
 }
@@ -18,7 +27,9 @@ for (let i = 0; i < dataTypes.length; i++) {
   dataTypes[i].addEventListener('click', changeDataType, false)
 }
 
-const toggleBootStrap = ({ target }) => {
+const toggleBootStrap = ({
+  target
+}) => {
   if (!target.checked) {
     removeStyle('bootstrap')
   } else {
@@ -32,28 +43,45 @@ document.getElementById('toggleBootstrap').addEventListener('click', toggleBootS
 
 jQuery($ => {
   const fields = [{
-    type: 'autocomplete',
-    label: 'Custom Autocomplete',
-    required: true,
-    values: [
-      { label: 'SQL' },
-      { label: 'C#' },
-      { label: 'JavaScript' },
-      { label: 'Java' },
-      { label: 'Python' },
-      { label: 'C++' },
-      { label: 'PHP' },
-      { label: 'Swift' },
-      { label: 'Ruby' },
-    ],
-  },
-  {
-    label: 'Star Rating',
-    attrs: {
-      type: 'starRating',
+      type: 'autocomplete',
+      label: 'Custom Autocomplete',
+      required: true,
+      values: [{
+          label: 'SQL'
+        },
+        {
+          label: 'C#'
+        },
+        {
+          label: 'JavaScript'
+        },
+        {
+          label: 'Java'
+        },
+        {
+          label: 'Python'
+        },
+        {
+          label: 'C++'
+        },
+        {
+          label: 'PHP'
+        },
+        {
+          label: 'Swift'
+        },
+        {
+          label: 'Ruby'
+        },
+      ],
     },
-    icon: '🌟',
-  },
+    {
+      label: 'Star Rating',
+      attrs: {
+        type: 'starRating',
+      },
+      icon: '🌟',
+    },
 
     // {
     //   label: 'Star Rating',
@@ -64,18 +92,15 @@ jQuery($ => {
     // }
   ]
 
-  const replaceFields = [
-    {
-      type: 'textarea',
-      subtype: 'tinymce',
-      datatype: 'custom-tinymce',
-      label: 'tinyMCE',
-      required: true,
-    },
-  ]
+  const replaceFields = [{
+    type: 'textarea',
+    subtype: 'tinymce',
+    datatype: 'custom-tinymce',
+    label: 'tinyMCE',
+    required: true,
+  }, ]
 
-  const actionButtons = [
-    {
+  const actionButtons = [{
       id: 'smile',
       className: 'btn btn-success',
       label: '😁',
@@ -95,51 +120,49 @@ jQuery($ => {
       return {
         field: '<span id="' + fieldData.name + '">',
         onRender: () => {
-          $(document.getElementById(fieldData.name)).rateYo({ rating: 3.6 })
+          $(document.getElementById(fieldData.name)).rateYo({
+            rating: 3.6
+          })
         },
       }
     },
   }
 
-  const inputSets = [
-    {
-      label: 'User Details',
-      icon: '👨',
-      name: 'user-details', // optional
-      showHeader: true, // optional
-      fields: [
-        {
-          type: 'text',
-          label: 'First Name',
-          className: 'form-control',
-        },
-        {
-          type: 'select',
-          label: 'Profession',
-          className: 'form-control',
-          values: [
-            {
-              label: 'Street Sweeper',
-              value: 'option-2',
-              selected: false,
-            },
-            {
-              label: 'Brain Surgeon',
-              value: 'option-3',
-              selected: false,
-            },
-          ],
-        },
-        {
-          type: 'textarea',
-          label: 'Short Bio:',
-          className: 'form-control',
-        },
+  const inputSets = [{
+    label: 'User Details',
+    icon: '👨',
+    name: 'user-details', // optional
+    showHeader: true, // optional
+    fields: [{
+        type: 'text',
+        label: 'First Name',
+        className: 'form-control',
+      },
+      {
+        type: 'select',
+        label: 'Profession',
+        className: 'form-control',
+        values: [{
+            label: 'Street Sweeper',
+            value: 'option-2',
+            selected: false,
+          },
+          {
+            label: 'Brain Surgeon',
+            value: 'option-3',
+            selected: false,
+          },
+        ],
+      },
+      {
+        type: 'textarea',
+        label: 'Short Bio:',
+        className: 'form-control',
+      },
 
-      ],
-      style: 'border: 1px solid red'
-    }
-  ]
+    ],
+    style: 'border: 1px solid red'
+  }]
 
   const typeUserDisabledAttrs = {
     autocomplete: ['access'],
@@ -164,12 +187,12 @@ jQuery($ => {
         value: 'col-lg-4'
       }
     },
-    // 'text': {
-    //   wrapper_class: {
-    //     label: 'wrapper_class',
-    //     value: 'col-lg-4'
-    //   }
-    // },
+    'text': {
+      wrapper_class: {
+        label: 'wrapper_class',
+        value: 'col-lg-4'
+      }
+    },
     'date': {
       wrapper_class: {
         label: 'wrapper_class',
@@ -216,42 +239,48 @@ jQuery($ => {
         style: 'border: 1px solid red',
       },
     },
-    text: {
-      asdf: {
-        label: 'Class',
-        multiple: true,
-        options: {
-          'red form-control': 'Red',
-          'green form-control': 'Green',
-          'blue form-control': 'Blue',
-        },
-        style: 'border: 1px solid red',
-      },
-      readonly: {
-        label: 'readonly',
-        value: false,
-      },
+    'table': {
       customItem: {
-        type: 'customItem',// custom item add remove
-        label: 'Goods Lost Destroyed Item',
+        type: 'customItem', // custom item add remove
+        label: 'Create Table Column',
         multiple: true,
-        items: {
-          'col1': ['select','textarea','checkbox','radio','text'],
-          'col2': ['select','textarea','checkbox','radio','text'],
-          'col3': ['select','textarea','checkbox','radio','text'],
-          'col4': ['select','textarea','checkbox','radio','text']
-        },
-        style: 'border: 1px solid red',
-      },
-      wrapper_class: {
-            label: 'wrapper_class',
-            value: 'col-lg-4'
+        fieldTypeOption: [{
+            label: 'Text',
+            value: 'text'
+          },
+          {
+            label: 'Text Area',
+            value: 'textarea'
+          },
+          {
+            label: 'Date',
+            value: 'date'
+          },
+          {
+            label: 'Number',
+            value: 'number'
+          },
+          {
+            label: 'Select',
+            value: 'select'
           }
+        ],
+        items: {
+          'Description of the property for which this claim is made': 'textarea',
+          'Date of purchase': 'date',
+          'Original Price': 'number',
+          'Cost of replacing the property': 'number'
+        }
+      },
+      // wrapper_class: {
+      //   label: 'wrapper_class',
+      //   value: 'col-lg-4'
+      // }
     }
   }
 
   // test disabledAttrs
-  const disabledAttrs = ['placeholder', 'name']
+  const disabledAttrs = ['placeholder', 'name','starRating']
 
   const fbOptions = {
     disabledSubtypes: {
@@ -408,19 +437,19 @@ jQuery($ => {
 
 
     }, 500);
-return false
+    return false
   }
- /**
+  /**
    * Detects the type of user defined attribute
    * @param {String} fld attribute name
    * @return {bool} type of user attr
    */
   function removeDuplicateOption(fld) {
     const optionList = $(fld).find('.selElement option')
-    let rebuildSel=''
+    let rebuildSel = ''
     $.each(optionList, function (k, l) {
       if (l.value === fld.id) {
-         rebuildSel = $(l).parent().attr('class')
+        rebuildSel = $(l).parent().attr('class')
         l.remove();
         $('.' + rebuildSel).multiselect('rebuild')
       }
@@ -428,7 +457,7 @@ return false
     return true
 
   }
- /**
+  /**
    * Detects the type of user defined attribute
    * @param {String} fld attribute name
    * @return {bool} type of user attr
@@ -441,24 +470,24 @@ return false
     removeDuplicateOption(fld)
     return true
   }
- /**
+  /**
    * Detects the type of user defined attribute
    * @param {String} ele attribute name
    * @return {string} type of user attr
    */
   function getFieldName(ele) {
-  const jj=$(ele).find('.prev-holder > div').attr('class')
-  if(jj!==undefined){
-    const ii = jj.split(' ').pop()
-    if(ele.type==='checkbox-group' || ele.type==='radio-group'){
-      return ele.type + '-' + ii.split('-')[3] + '-' + 'preview'
-    }else{
-      return ele.type + '-' + ii.split('-')[2] + '-' + 'preview'
+    const jj = $(ele).find('.prev-holder > div').attr('class')
+    if (jj !== undefined) {
+      const ii = jj.split(' ').pop()
+      if (ele.type === 'checkbox-group' || ele.type === 'radio-group') {
+        return ele.type + '-' + ii.split('-')[3] + '-' + 'preview'
+      } else {
+        return ele.type + '-' + ii.split('-')[2] + '-' + 'preview'
+      }
     }
   }
-  }
- 
- /**
+
+  /**
    * Detects the type of user defined attribute
    * @param {String} fld attribute name
    * @return {bool} type of user attr
@@ -466,11 +495,14 @@ return false
   function populateSelectElement(fld) {
     const partSel = $(fld).find('.selElement')
     const data = []
-    let eNameId=''
+    let eNameId = ''
     const listOption = $(fld).siblings()
     $.each(listOption, function (i, v) {
-      eNameId= getFieldName(v)
-      data.push({ label: eNameId + ' [' + v.type + ']', value: eNameId })
+      eNameId = getFieldName(v)
+      data.push({
+        label: eNameId + ' [' + v.type + ']',
+        value: eNameId
+      })
     })
     console.log(data)
     $.each(partSel, function (i, v) {
@@ -547,7 +579,7 @@ return false
 
   })
   $(document).on('click', '.testClick', function () {
-   // console.log(fbInstances)
+    // console.log(fbInstances)
     const forData = '[{"type":"select","required":true,"label":"Mode of&nbsp; Transport","className":"form-control","name":"select-1545714463533","wrapper_class":"col-lg-6","values":[{"label":"Ship","value":"ship","selected":true,"showHide":false,"mapElement":[]},{"label":"Air Plane","value":"airplane","showHide":false,"mapElement":[]},{"label":"Road Vehicle","value":"vehcile","showHide":false,"mapElement":[]},{"label":"Train","value":"train","showHide":false,"mapElement":[]}]},{"type":"text","required":true,"label":"Name of Carrier","className":"form-control","name":"text-1545714629448","subtype":"text","wrapper_class":"col-lg-6"},{"type":"date","required":true,"label":"Date of Loading","className":"form-control","name":"date-1545714668700","wrapper_class":"col-lg-6"},{"type":"date","required":true,"label":"Arrival Date","className":"form-control","name":"date-1545714688701","wrapper_class":"col-lg-6"},{"type":"select","required":true,"label":"Departure from","className":"form-control","name":"select-1545714741481","wrapper_class":"col-lg-6","values":[{"label":"Usa","value":"usa","selected":true,"showHide":false,"mapElement":[]},{"label":"Hong Kong","value":"hongkong","showHide":false,"mapElement":[]},{"label":"India","value":"india","showHide":false,"mapElement":[]}]},{"type":"select","required":true,"label":"Transport to","className":"form-control","name":"select-1545714743985","wrapper_class":"col-lg-6","values":[{"label":"Usa","value":"usa","selected":true,"showHide":false,"mapElement":[]},{"label":"Hong Kong","value":"hongkong","showHide":false,"mapElement":[]},{"label":"India","value":"india","showHide":false,"mapElement":[]}]},{"type":"text","required":true,"label":"Bill of Lading","className":"form-control","name":"text-1545714942949","subtype":"text","wrapper_class":"col-lg-12"},{"type":"checkbox-group","label":"Consignee","name":"checkbox-group-1545714965156","wrapper_class":"col-lg-6","values":[{"label":"Yes","value":"yes","showHide":true,"mapElement":["text-1545715022423","text-1545715040596","text-1545715056446","select-1545715076816"]}]},{"type":"text","label":"Consignee Name","className":"form-control","name":"text-1545715022423","subtype":"text","wrapper_class":"col-lg-6"},{"type":"text","label":"Address","className":"form-control","name":"text-1545715040596","subtype":"text","wrapper_class":"col-lg-6"},{"type":"text","label":"Post Code","className":"form-control","name":"text-1545715056446","subtype":"text","wrapper_class":"col-lg-6"},{"type":"select","label":"Country","className":"form-control","name":"select-1545715076816","wrapper_class":"col-lg-6","values":[{"label":"Usa","value":"usa","selected":true,"showHide":false,"mapElement":[]},{"label":"Hong Kong","value":"hongkong","showHide":false,"mapElement":[]},{"label":"India","value":"india","showHide":false,"mapElement":[]}]},{"type":"textarea","label":"Additional Information","className":"form-control","name":"textarea-1545716004850","subtype":"textarea","maxlength":"200","rows":"4"}]';
     // fbInstances[0].actions.setData(forData);
     fbInstances.forEach(element => {
@@ -595,7 +627,11 @@ return false
 
     langSelect.addEventListener(
       'change',
-      ({ target: { value: lang } }) => {
+      ({
+        target: {
+          value: lang
+        }
+      }) => {
         window.sessionStorage.setItem(localeSessionKey, lang)
         fb.actions.setLang(lang)
       },

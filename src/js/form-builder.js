@@ -629,23 +629,32 @@ const FormBuilder = function (opts, element) {
    * @return {String}         select markup
    */
   function customItem(name, fieldData) {
-    console.log(name)
-    console.log(fieldData)
      const { items: items,label:label} = fieldData
      const label1 = `<label>${label}</label>`
-     let inputCol = '';
+     let inputCol = '<li class="tableRow d-flex"><span class="tableCol1">Column Text</span><span class="tableCol2">Data Type</span></li>';
      let calDamage=0;
-     const tt=[{label: 'Text Field', value: 'text'},{label: 'Text Field', value: 'text'},{label: 'Text Field', value: 'text'}]
+    // const tt=[{label: 'Text Field', value: 'text'},{label: 'Text Field', value: 'text'},{label: 'Text Field', value: 'text'}]
      for (const property in items) {
        if (items.hasOwnProperty(property)) {
-         console.log(items[property])
-         inputCol += '<li class="damLi">' + m('input', null, { type: 'text', value: property,class:'damItemName' }).outerHTML +  customSelectAttr('subtype',fieldData,tt).outerHTML+ '<a class="itemRemove btn icon-cancel" title="Remove Element"></a></li>'
+        //  console.log(items[property])
+         inputCol += '<li class="tableRow d-flex">' + m('input', null, { type: 'text', value:property,class:'damItemName form-control' }).outerHTML +  customSelectAttr(items[property],fieldData,fieldData.fieldTypeOption).outerHTML+ '<a class="itemRemove btn icon-cancel" title="Remove Element"></a></li>'
         calDamage=calDamage+items[property]
         }
       
      }
-     console.log(inputCol)
-     const optionActions = [m('a', 'Add Item+', { className: 'add add-item' })]
+     const optionli= fieldData.fieldTypeOption.map((option, i) => {
+      let optionAttrs = Object.assign(
+        {
+          label: `${i18n.option} ${i}`,
+          value: undefined,
+        },
+        option
+      )
+      optionAttrs = trimObj(optionAttrs)
+     return m('option', optionAttrs.label, optionAttrs).outerHTML
+    })
+    console.log(JSON.stringify(optionli))
+     const optionActions = [m('a', 'Add Column+', { className: 'add add-item','data-availableOption':JSON.stringify(optionli) })]
      const optionActionsWrap = m('div', optionActions, { className: 'option-actions' })
      const optionsWrap = m('div', optionActionsWrap, { className: 'sortable-options-wrap' }).outerHTML
      
@@ -766,9 +775,7 @@ const FormBuilder = function (opts, element) {
    * @return {String}            select input makrup
    */
   const customSelectAttr=(attribute, values, optionData)=>{
-    console.log(attribute)
-    console.log(values)
-    console.log(optionData)
+    // console.log(values)
     const selectOptions = optionData.map((option, i) => {
       let optionAttrs = Object.assign(
         {
@@ -777,22 +784,22 @@ const FormBuilder = function (opts, element) {
         },
         option
       )
-      if (option.value === values[attribute]) {
+      // console.log(option)
+      // console.log(values.items)
+      if (option.value === attribute) {
         optionAttrs.selected = true
       }
       optionAttrs = trimObj(optionAttrs)
      const jj= m('option', optionAttrs.label, optionAttrs)
-      console.log(jj)
       return jj
     })
-    console.log(selectOptions)
     const selectAttrs = {
       id: attribute + '-' + data.lastID,
       name: attribute,
       className: `fld-${attribute} form-control`,
     }
-    const labelText = mi18n.get(attribute) || capitalize(attribute) || ''
-    const label = m('label', labelText, { for: selectAttrs.id })
+    // const labelText = mi18n.get(attribute) || capitalize(attribute) || ''
+    // const label = m('label', labelText, { for: selectAttrs.id })
     const select = m('select', selectOptions, selectAttrs)
     return select
 
@@ -805,11 +812,7 @@ const FormBuilder = function (opts, element) {
    * @return {String}            select input makrup
    */
   const selectAttribute = (attribute, values, optionData) => {
-    console.log(attribute)
-    console.log(values)
-    console.log(optionData)
     const selectOptions = optionData.map((option, i) => {
-      console.log(option)
       let optionAttrs = Object.assign(
         {
           label: `${i18n.option} ${i}`,
@@ -822,10 +825,8 @@ const FormBuilder = function (opts, element) {
       }
       optionAttrs = trimObj(optionAttrs)
      const jj= m('option', optionAttrs.label, optionAttrs)
-      console.log(jj)
       return jj
     })
-    console.log(selectOptions)
     const selectAttrs = {
       id: attribute + '-' + data.lastID,
       name: attribute,
@@ -840,7 +841,6 @@ const FormBuilder = function (opts, element) {
     })
 
     const uu= attrWrap.outerHTML
-    console.log(uu)
     return uu
   }
 
@@ -1426,7 +1426,9 @@ const FormBuilder = function (opts, element) {
   // add new damaged item
   $stage.on('click', '.add-item', function (e) {
     e.preventDefault()
-   const newLi='<li class="damLi"><input type="text" placeholder="new item" class="damItemName"><input type="number" placeholder="0" class="damItemCost"><a class="itemRemove btn icon-cancel" title="Remove Element"></a></li>'
+    const avOptLi=$(e.target).data('availableOption')
+    // console.log(avOptLi[0])
+   const newLi=`<li class="tableRow d-flex"><input type="text" placeholder="new col" class="damItemName form-control"><select class="form-control">${avOptLi}</select><a class="itemRemove btn icon-cancel" title="Remove Element"></a></li>`
 
    $(e.target).parent().parent().siblings('.customItem-wrap').find('.damDiv').append(newLi)
 
